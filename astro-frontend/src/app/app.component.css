@@ -1,0 +1,144 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+  background: #282c34;
+  padding: 20px 0;
+  color: #fff;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  margin: 0;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin: 0 15px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+nav a:hover {
+  text-decoration: underline; /* Underline on hover */
+  color: #61dafb; /* Change color on hover */
+}
+
+/* Hero Section Styles */
+.hero {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding: 60px 0;
+}
+
+.carousel-image {
+  width: 100%;          /* Full width of the container */
+  height: 800px;       /* Fixed height for uniformity */
+  object-fit: cover;    /* Ensure images cover the area while maintaining aspect ratio */
+  object-position: center; /* Center the image if it doesn’t fit perfectly */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: white; /* Text color */
+  padding: 20px; /* Padding for better spacing */
+  border-radius: 5px; /* Optional: round corners */
+}
+
+/* About Section Styles */
+.about {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.about h2 {
+  margin-bottom: 20px;
+}
+
+/* Services Section Styles */
+.services {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.services h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+
+.service-box {
+  display: inline-block;
+  width: 30%;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-box h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.service-box p {
+  font-size: 16px;
+  color: #777;
+}
+/* .service-box {
+  background: #fff;
+  padding: 20px;
+  margin: 20px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+} */
+
+/* .service-box h3 {
+  margin-top: 0;
+} */
+
+/* Footer Styles */
+.footer {
+  background: #282c34;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: #61dafb; /* Link color */
+  margin: 0 10px; /* Spacing */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column; /* Stack items on smaller screens */
+    align-items: flex-start;
+  }
+
+  .service-box {
+    margin: 10px 0; /* Reduce margin on smaller screens */
+  }
+}

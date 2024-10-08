@@ -1,0 +1,48 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment directory (if you're using venv)
+venv/
+env/
+.venv/
+
+# Poetry files
+.poetry/
+
+# Flask instance and config files
+instance/
+config.py
+
+# Flask-SQLAlchemy database file
+*.db
+*.sqlite3
+
+# Logs and local environment settings
+*.log
+.env
+
+# Static file build output (if applicable)
+staticfiles/
+
+# Pytest and coverage files
+htmlcov/
+.coverage
+.tox/
+.nox/
+.cache
+pytest_cache/
+
+# IDE specific files (optional, but good practice)
+.vscode/
+.idea/
+*.swp
+
+# Deployment files (if you're using Docker)
+Dockerfile
+docker-compose.yml
+*.dockerenv
+
+# MacOS system files (optional, if using macOS)
+.DS_Store

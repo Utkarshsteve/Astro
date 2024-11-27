@@ -1,0 +1,117 @@
+
+.container {
+  background-color: #1c1c2e;
+  background-image: url('../../assets/images/daily_horoscope.jpg'); /* Optional starry background image */
+  background-size: cover;
+  background-position: center;
+  color: #ecf0f1;
+  font-family: 'Georgia', serif;
+  height: 100vh;
+}
+
+.horoscope-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding-top: 100px; /* Adjust the padding value as needed */
+}
+
+.horoscope-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #f1c40f; /* Astrological gold color */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 18px;
+  color: #ecf0f1;
+  letter-spacing: 1px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.1); /* Transparent inputs for mystic look */
+  color: #fff;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+input:focus, select:focus {
+  background-color: rgba(255, 255, 255, 0.2); /* Slight highlight on focus */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.8); /* Glowing effect on focus */
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #8e44ad; /* Mystic purple */
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #9b59b6; /* Lighter shade on hover */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Glowing hover effect */
+}
+
+button:disabled {
+  background-color: #7f8c8d; /* Disabled state */
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 14px;
+}
+
+input::placeholder, select::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.horoscope-form-container::before {
+  content: '';
+  position: absolute;
+  top: -50px;
+  left: -50px;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.2), transparent);
+  filter: blur(30px);
+  animation: glow 5s infinite alternate;
+}
+
+/* Footer Styles */
+.footer {
+  background: #282c34;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+@keyframes glow {
+  from {
+    transform: translate(-50px, -50px);
+    opacity: 0.5;
+  }
+  to {
+    transform: translate(-40px, -40px);
+    opacity: 0.9;
+  }
+}

@@ -1,0 +1,181 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* Header Styles */
+.header {
+  overflow: hidden;
+  background: #282c34;
+  color: #fff;
+  padding: 20px 10px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  text-decoration: underline;
+  color: #61dafb;
+}
+
+.header a.active {
+  background-color: #2C3E50;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+a {
+  text-decoration: none;
+  color: inherit; /* Ensure the text color inside the link is unchanged */
+}
+
+/* Hero Section Styles */
+.hero {
+  position: relative;
+  text-align: center;
+  color: #fff;
+  padding: 60px 0;
+}
+
+.carousel-image {
+  width: 100%;          /* Full width of the container */
+  height: 180px;       /* Fixed height for uniformity */
+  object-fit: cover;    /* Ensure images cover the area while maintaining aspect ratio */
+  object-position: center; /* Center the image if it doesn’t fit perfectly */
+}
+
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  color: white; /* Text color */
+  padding: 20px; /* Padding for better spacing */
+  border-radius: 5px; /* Optional: round corners */
+}
+
+.card-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/*card*/
+.card {
+  background-color: #2b2e3a; /* Dark background */
+  padding: 15px;
+  text-align: center;
+  width: 23%; /* Adjust width depending on the number of cards */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-decoration: none; /* Remove underline from links */
+  display: block; /* Ensure the anchor fills the card space */
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.card h3 {
+  margin: 15px 0;
+}
+
+.card p {
+  font-size: 14px;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  transition: transform 0.3s ease;
+}
+
+/* About Section Styles */
+.about {
+  padding: 60px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.about h2 {
+  margin-bottom: 20px;
+}
+
+/* Services Section Styles */
+.services {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.services h2 {
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+
+.service-box {
+  display: inline-block;
+  width: 30%;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.service-box h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.service-box p {
+  font-size: 16px;
+  color: #777;
+}
+
+/* Footer Styles */
+.footer {
+  background: #282c34;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: #61dafb; /* Link color */
+  margin: 0 10px; /* Spacing */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  /* nav {
+    flex-direction: column;
+    align-items: flex-start;
+  } */
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+  .service-box {
+    margin: 10px 0; /* Reduce margin on smaller screens */
+  }
+}

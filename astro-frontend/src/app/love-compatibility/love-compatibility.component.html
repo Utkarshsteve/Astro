@@ -1,0 +1,42 @@
+<div class="compatibility-container">
+  <h2>Love Compatibility Calculator</h2>
+
+  <form [formGroup]="compatibilityForm" (ngSubmit)="calculateCompatibility()">
+    <!-- Your Name -->
+    <div class="form-group">
+      <label for="yourName">Your Name:</label>
+      <input
+        type="text"
+        id="yourName"
+        formControlName="yourName"
+        placeholder="Enter your name"
+      />
+      <div class="error" *ngIf="compatibilityForm.get('yourName')?.invalid && compatibilityForm.get('yourName')?.touched">
+        Please enter a valid name.
+      </div>
+    </div>
+
+    <!-- Partner's Name -->
+    <div class="form-group">
+      <label for="partnerName">Partner's Name:</label>
+      <input
+        type="text"
+        id="partnerName"
+        formControlName="partnerName"
+        placeholder="Enter your partner's name"
+      />
+      <div class="error" *ngIf="compatibilityForm.get('partnerName')?.invalid && compatibilityForm.get('partnerName')?.touched">
+        Please enter a valid name.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" [disabled]="compatibilityForm.invalid">Calculate Compatibility</button>
+  </form>
+
+  <!-- Compatibility Result -->
+  <div *ngIf="compatibilityScore !== null" class="result">
+    <h3>Compatibility Score: {{ compatibilityScore }}%</h3>
+    <p>{{ message }}</p>
+  </div>
+</div>

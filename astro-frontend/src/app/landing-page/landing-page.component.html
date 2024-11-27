@@ -1,0 +1,95 @@
+<div class="header">
+  <a href="#default" class="logo">CompanyLogo</a>
+  <div class="header-right">
+    <a class="active" [routerLink]="['/login']" routerLinkActive="active">Login</a>
+    <a [routerLink]="['/sign-up']" routerLinkActive="active">SignUp</a>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <ngb-carousel>
+      <ng-template ngbSlide>
+        <img src="https://as1.ftcdn.net/v2/jpg/03/40/95/96/1000_F_340959621_xfQmke6DelMOopQcPCiQsISMNMYWHCC5.jpg"
+          alt="Astrology Image 1" class="carousel-image">
+        <div class="carousel-caption d-none d-md-block">
+          <h2>Unlock the Mysteries of Your Zodiac</h2>
+          <p>Discover your future with the wisdom of astrology.</p>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <img src="https://as2.ftcdn.net/v2/jpg/03/31/21/53/1000_F_331215337_XbaOEWDrx2Mvie3MlNpm7Bno4iNjHIge.jpg"
+          alt="Astrology Image 2" class="carousel-image">
+        <div class="carousel-caption d-none d-md-block">
+          <h2>Personalized Horoscope</h2>
+          <p>Get daily insights tailored to your zodiac sign.</p>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <img src="https://as1.ftcdn.net/v2/jpg/03/46/36/48/1000_F_346364876_GatpVrAFsgI62FoUAGiDdbIm0xN4iAsp.jpg"
+          alt="Astrology Image 3" class="carousel-image">
+        <div class="carousel-caption d-none d-md-block">
+          <h2>Love Compatibility</h2>
+          <p>Find out how compatible you are with your partner.</p>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+</section>
+
+<div class="card-section">
+  <a [routerLink]="['/daily-horoscope']" routerLinkActive="active" class="card">
+    <img src="../../assets/images/horoscope.png" alt="Daily Horoscope">
+    <h3>Daily Horoscope</h3>
+    <p>Stay updated with your daily horoscope to guide you through each day's events and emotions.</p>
+  </a>
+  <a [routerLink]="['/birth-chart']" routerLinkActive="active" class="card">
+    <img src="../../assets/images/birth_chart.jpeg" alt="Birth Chart">
+    <h3>Birth Chart</h3>
+    <p>Get a personalized birth chart that reveals the unique positions of the planets at the time of your birth.</p>
+  </a>
+  <a routerLink="/zodiac-sign" routerLinkActive="active" class="card">
+    <img src="../../assets/images/zodiac.jpeg" alt="Zodiac Signs">
+    <h3>Zodiac Signs</h3>
+    <p>Explore the traits, strengths, and challenges of each zodiac sign to better understand yourself and others.</p>
+  </a>
+  <a [routerLink]="['/love-compatibility']" class="card">
+    <img src="../../assets/images/love_compatibility.jpeg" alt="Love Compatibility">
+    <h3>Love Compatibility</h3>
+    <p>Discover your compatibility with your partner based on your astrological signs and elements.</p>
+  </a>
+</div>
+
+<section id="about" class="about">
+  <div class="container">
+    <h2>About Us</h2>
+    <p>Astrology Insights is your trusted guide for exploring the cosmos. Our astrologers are here to help you uncover
+      the secrets of the universe and how they impact your life.</p>
+  </div>
+</section>
+
+<section id="services" class="services">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="service-box">
+      <h3>Personalized Horoscope</h3>
+      <p>Dive into the cosmos with your daily horoscope. Explore your present and future potential.</p>
+    </div>
+    <div class="service-box">
+      <h3>Love Compatibility</h3>
+      <p>Find out how compatible you are with your partner based on your astrological signs.</p>
+    </div>
+    <div class="service-box">
+      <h3>Tarot Readings Cards</h3>
+      <p>Let the tarot cards reveal insights about your past, present, and future. Please see the cards</p>
+    </div>
+  </div>
+</section>
+
+<footer id="contact" class="footer">
+  <div class="container">
+    <h2>Contact Us</h2>
+    <p>Email: info&#64;astrologyinsights.com | Phone: +123-456-7890</p>
+    <p>&copy; 2024 Astrology Insights</p>
+  </div>
+</footer>

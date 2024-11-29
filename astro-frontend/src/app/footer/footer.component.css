@@ -1,0 +1,12 @@
+/* Footer Styles */
+.footer {
+  background: #282c34;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.footer a {
+  color: #61dafb; /* Link color */
+  margin: 0 10px; /* Spacing */
+}

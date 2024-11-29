@@ -1,0 +1,12 @@
+<div class="about-us-container">
+  <div class="about-us-image">
+    <img src="../../assets/images/about-us-image.jpeg" alt="App Screenshot" />
+  </div>
+  <div class="about-items">
+    <div class="about-item" *ngFor="let item of aboutItems" [ngClass]="'item-' + item.position">
+      <div class="icon" [innerHTML]="item.icon"></div>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.description }}</p>
+    </div>
+  </div>
+</div>

@@ -4,44 +4,6 @@ body {
   line-height: 1.6;
 }
 
-/* Header Styles */
-.header {
-  overflow: hidden;
-  background: #282c34;
-  color: #fff;
-  padding: 20px 10px;
-}
-
-.header a {
-  float: left;
-  color: black;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
-}
-
-.header a.logo {
-  font-size: 25px;
-  font-weight: bold;
-}
-
-.header a:hover {
-  text-decoration: underline;
-  color: #61dafb;
-}
-
-.header a.active {
-  background-color: #2C3E50;
-  color: white;
-}
-
-.header-right {
-  float: right;
-}
-
 a {
   text-decoration: none;
   color: inherit; /* Ensure the text color inside the link is unchanged */
@@ -52,21 +14,35 @@ a {
   position: relative;
   text-align: center;
   color: #fff;
-  padding: 60px 0;
+  padding: 0px 0;
 }
 
+/* Carousel Container */
+.carousel-container {
+  background-color: black;      /* Black background for the carousel */
+  padding: 20px 0;              /* Vertical padding for visual separation */
+}
+
+/* Carousel Image */
 .carousel-image {
-  width: 100%;          /* Full width of the container */
-  height: 180px;       /* Fixed height for uniformity */
-  object-fit: cover;    /* Ensure images cover the area while maintaining aspect ratio */
-  object-position: center; /* Center the image if it doesn’t fit perfectly */
+  width: 100%;                  /* Full width of the container */
+  height: 300px;                /* Fixed height for consistent sizing */
+  object-fit: cover;            /* Ensure image covers the container */
+  object-position: center;      /* Center the image within the container */
+  background-color: black;      /* Prevent any white gaps */
 }
 
+/* Carousel Caption */
 .carousel-caption {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  color: white; /* Text color */
-  padding: 20px; /* Padding for better spacing */
-  border-radius: 5px; /* Optional: round corners */
+  background-color: rgba(0, 0, 0, 0.7);  /* Semi-transparent black overlay */
+  color: white;                          /* White text for contrast */
+  padding: 15px;                         /* Padding for readability */
+  border-radius: 10px;                   /* Soft rounded corners */
+  text-align: center;                    /* Center the text */
+  position: absolute;                    /* Overlay effect */
+  bottom: 20px;                          /* Position from the bottom */
+  left: 50%;                             /* Center horizontally */
+  transform: translateX(-50%);           /* Correct centering */
 }
 
 .card-section {
@@ -165,10 +141,15 @@ a {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  /* nav {
-    flex-direction: column;
-    align-items: flex-start;
-  } */
+  .carousel-image {
+    height: 200px;            /* Smaller height on mobile devices */
+  }
+
+  .carousel-caption {
+    padding: 10px;            /* Smaller padding for captions */
+    font-size: 14px;          /* Smaller text size for better fit */
+  }
+
   .header a {
     float: none;
     display: block;

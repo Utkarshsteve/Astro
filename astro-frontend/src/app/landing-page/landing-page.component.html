@@ -1,13 +1,7 @@
-<div class="header">
-  <a href="#default" class="logo">CompanyLogo</a>
-  <div class="header-right">
-    <a class="active" [routerLink]="['/login']" routerLinkActive="active">Login</a>
-    <a [routerLink]="['/sign-up']" routerLinkActive="active">SignUp</a>
-  </div>
-</div>
+<app-header></app-header>
 
 <section class="hero">
-  <div class="container">
+  <div class="carousel-container">
     <ngb-carousel>
       <ng-template ngbSlide>
         <img src="https://as1.ftcdn.net/v2/jpg/03/40/95/96/1000_F_340959621_xfQmke6DelMOopQcPCiQsISMNMYWHCC5.jpg"
@@ -60,36 +54,6 @@
   </a>
 </div>
 
-<section id="about" class="about">
-  <div class="container">
-    <h2>About Us</h2>
-    <p>Astrology Insights is your trusted guide for exploring the cosmos. Our astrologers are here to help you uncover
-      the secrets of the universe and how they impact your life.</p>
-  </div>
-</section>
+<app-about-us></app-about-us>
 
-<section id="services" class="services">
-  <div class="container">
-    <h2>Our Services</h2>
-    <div class="service-box">
-      <h3>Personalized Horoscope</h3>
-      <p>Dive into the cosmos with your daily horoscope. Explore your present and future potential.</p>
-    </div>
-    <div class="service-box">
-      <h3>Love Compatibility</h3>
-      <p>Find out how compatible you are with your partner based on your astrological signs.</p>
-    </div>
-    <div class="service-box">
-      <h3>Tarot Readings Cards</h3>
-      <p>Let the tarot cards reveal insights about your past, present, and future. Please see the cards</p>
-    </div>
-  </div>
-</section>
-
-<footer id="contact" class="footer">
-  <div class="container">
-    <h2>Contact Us</h2>
-    <p>Email: info&#64;astrologyinsights.com | Phone: +123-456-7890</p>
-    <p>&copy; 2024 Astrology Insights</p>
-  </div>
-</footer>
+<app-footer></app-footer>

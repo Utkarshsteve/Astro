@@ -84,59 +84,44 @@ a {
   transition: transform 0.3s ease;
 }
 
-/* About Section Styles */
-.about {
-  padding: 60px 20px;
-  background-color: #f9f9f9;
-  text-align: center;
-}
-
-.about h2 {
-  margin-bottom: 20px;
-}
-
-/* Services Section Styles */
-.services {
-  padding: 60px 20px;
-  text-align: center;
-}
-
-.services h2 {
+.heading {
+  color: orange;
   font-size: 36px;
+  margin-bottom: 20px;
+  text-align: center;
+
+}
+
+.subheading {
+  font-size: 18px;
   margin-bottom: 40px;
-}
-
-.service-box {
-  display: inline-block;
-  width: 30%;
-  padding: 20px;
-  margin: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.service-box h3 {
-  font-size: 24px;
-  margin-bottom: 10px;
-}
-
-.service-box p {
-  font-size: 16px;
-  color: #777;
-}
-
-/* Footer Styles */
-.footer {
-  background: #282c34;
-  color: #fff;
-  padding: 20px 0;
   text-align: center;
 }
 
-.footer a {
-  color: #61dafb; /* Link color */
-  margin: 0 10px; /* Spacing */
+.feature-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.feature {
+  width: 30%;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.feature img {
+  width: 100%;
+}
+
+.feature h3 {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+.feature p {
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 /* Responsive Design */

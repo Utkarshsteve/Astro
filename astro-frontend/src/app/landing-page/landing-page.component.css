@@ -86,10 +86,9 @@ a {
 
 .heading {
   color: orange;
-  font-size: 36px;
+  font-size: 40px;
   margin-bottom: 20px;
   text-align: center;
-
 }
 
 .subheading {
@@ -102,6 +101,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  background-color: #ffcc29;
 }
 
 .feature {

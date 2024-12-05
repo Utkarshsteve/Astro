@@ -12,17 +12,53 @@
   z-index: 1000;
 }
 
-/* Modal content box */
+/* Modal content container */
 .modal-content {
+  display: flex;
+  flex-direction: row; /* Side-by-side layout */
+  width: 80%; /* Adjust as needed */
+  max-width: 900px;
+  height: 60%; /* Adjust the height */
   background-color: #FFF7D1; /* Light yellow */
-  padding: 30px;
   border-radius: 10px;
+  overflow: hidden;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
-  text-align: center;
-  max-width: 400px;
-  width: 90%;
   border: 2px solid #E67E22; /* Complementary orange border */
 }
+
+/* Left Section (Image) */
+.left-section {
+  flex: 1; /* Takes 50% width */
+}
+
+.left-section img.left-section-image {
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+
+/* .right-section {
+  flex: 1;
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  background-color: #FFF7D1;
+} */
+
+/* Right Section (Sign-In) */
+.right-section {
+  flex: 1; /* Takes 50% width */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center */
+  align-items: center; /* Horizontally center */
+  padding: 30px;
+  text-align: center;
+  position: relative; /* For the close button */
+  background-color: #FFF7D1;
+}
+
 
 /* Close button (X) */
 .close-btn {
@@ -50,4 +86,16 @@
 
 .google-btn:hover {
   background-color: #D35400; /* Darker shade on hover */
+}
+
+/* Right Section Text */
+.right-section p {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555; /* Slightly darker text for contrast */
+}
+
+.right-section a {
+  color: #E67E22;
+  text-decoration: none;
 }

@@ -3,7 +3,7 @@
     <span class="logo-text">Astro<span class="logo-highlight">Insta</span></span>
   </div>
   <div class="action-buttons">
-    <button class="login-btn" [routerLink]="['/login']" routerLinkActive="active">Login</button>
+    <button class="login-btn" (click)="openModal()">Login</button>
   </div>
 </nav>
 
@@ -18,3 +18,6 @@
     <li><a href="#">Blog</a></li>
   </ul>
 </nav>
+
+<!-- Login Modal Component -->
+<app-login *ngIf="isModalOpen" (closeModal)="closeModal()"></app-login>

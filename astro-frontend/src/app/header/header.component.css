@@ -48,6 +48,7 @@ body, html {
   }
 }
 
+
 /* Slow glow animation for the pseudo-element */
 @keyframes glow {
   0%, 100% {

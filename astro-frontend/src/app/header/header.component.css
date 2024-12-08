@@ -22,6 +22,7 @@ body, html {
   animation: pulse 4s infinite; /* Slower pulsing animation */
 }
 
+
 /* Add a glowing effect using pseudo-elements */
 .logo-image::after {
   content: '';

@@ -15,14 +15,48 @@ body, html {
   border-bottom: 1px solid #ddd;
 }
 
-.logo-text {
-  font-size: 24px;
-  font-weight: bold;
-  color: #ff6600;
+.logo-image {
+  width: 190px; /* Adjusted width */
+  height: auto; /* Maintain aspect ratio */
+  position: relative; /* For pseudo-elements */
+  animation: pulse 4s infinite; /* Slower pulsing animation */
 }
 
-.logo-highlight {
-  color: #666666;
+/* Add a glowing effect using pseudo-elements */
+.logo-image::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px; /* Slightly larger than the image */
+  height: 200px;
+  background: radial-gradient(circle, rgba(255, 200, 0, 0.2), rgba(255, 200, 0, 0)); /* Softer glow */
+  border-radius: 50%; /* Circular gradient */
+  z-index: -1; /* Place behind the image */
+  animation: glow 4s infinite; /* Slower glow animation */
+}
+
+/* Slow pulse animation for the image */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02); /* Subtle scaling */
+  }
+}
+
+/* Slow glow animation for the pseudo-element */
+@keyframes glow {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05); /* Subtle size increase */
+    opacity: 0.6; /* Slightly brighter glow */
+  }
 }
 
 /* Action Buttons */

@@ -13,11 +13,14 @@ import { LoginComponent } from '../login/login.component';
 export class HeaderComponent {
   isModalOpen = false;
 
+   // Opens the modal when "Login" button is clicked
   openModal() {
     this.isModalOpen = true;
   }
 
+    // Closes the modal
   closeModal() {
     this.isModalOpen = false;
   }
+  
 }

@@ -1,73 +1,353 @@
-<div class="birth-chart-container">
-  <form [formGroup]="birthChartForm" (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="name">Name</label>
-      <input
-        id="name"
-        type="text"
-        formControlName="name"
-        class="form-control"
-        placeholder="Enter your name"
-      />
-      <div *ngIf="birthChartForm.get('name')?.invalid && birthChartForm.get('name')?.touched" class="error">
-        Name is required.
-      </div>
-    </div>
+<!-- birth-chart.component.html -->
+<app-header></app-header>
 
-    <div class="form-group">
-      <label for="gender">Gender</label>
-      <select id="gender" formControlName="gender" class="form-control">
-        <option value="" disabled>Select Gender</option>
-        <option value="male">Male</option>
-        <option value="female">Female</option>
-        <option value="non-binary">Non-Binary</option>
-        <option value="prefer-not-to-say">Prefer not to say</option>
-      </select>
-      <div *ngIf="birthChartForm.get('gender')?.invalid && birthChartForm.get('gender')?.touched" class="error">
-        Gender is required.
-      </div>
+<div class="container">
+  <!-- Left Box for Birth Chart Horoscope -->
+  <div 
+    class="box left-box" 
+    [class.selected]="isBirthChartSelected"
+    [@boxState]="isBirthChartSelected ? 'selected' : 'normal'"
+    (click)="onBirthChartClick(birthChartModal)"
+    (keydown)="onKeyPress($event, 'personal', birthChartModal)"
+    tabindex="0"
+    ngbTooltip="{{ birthChartTooltip }}"
+    role="button"
+    aria-label="Personal Birth Chart"
+  >
+    <div class="box-image">
+      <img src="assets/birth-chart-icon.svg" alt="Birth Chart Horoscope">
     </div>
-
-    <div class="form-group">
-      <label for="birthdate">Birthdate</label>
-      <input
-        id="birthdate"
-        type="date"
-        formControlName="birthdate"
-        class="form-control"
-      />
-      <div *ngIf="birthChartForm.get('birthdate')?.invalid && birthChartForm.get('birthdate')?.touched" class="error">
-        Birthdate is required.
-      </div>
+    <div class="box-title">
+      <h2>Unlock Your Cosmic Blueprint</h2>
     </div>
-
-    <div class="form-group">
-      <label for="timeOfBirth">Time of Birth</label>
-      <input
-        id="timeOfBirth"
-        type="time"
-        formControlName="timeOfBirth"
-        class="form-control"
-      />
-      <div *ngIf="birthChartForm.get('timeOfBirth')?.invalid && birthChartForm.get('timeOfBirth')?.touched" class="error">
-        Time of birth is required.
-      </div>
+    <div class="box-content">
+      <ul>
+        <li>
+          <span class="icon">🌟</span>
+          <span class="text">Personalized Natal Chart Analysis</span>
+        </li>
+        <li>
+          <span class="icon">🔮</span>
+          <span class="text">Insights into Your Destiny's Path</span>
+        </li>
+        <li>
+          <span class="icon">💫</span>
+          <span class="text">Ayurvedic Health Predictions</span>
+        </li>
+        <li>
+          <span class="icon">📅</span>
+          <span class="text">10-Year Yearly Forecast</span>
+        </li>
+        <li>
+          <span class="icon">💬</span>
+          <span class="text">Expert Astrologer Consultation</span>
+        </li>
+      </ul>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="birthplace">Birthplace</label>
-      <input
-        id="birthplace"
-        type="text"
-        formControlName="birthplace"
-        class="form-control"
-        placeholder="Enter your birthplace"
-      />
-      <div *ngIf="birthChartForm.get('birthplace')?.invalid && birthChartForm.get('birthplace')?.touched" class="error">
-        Birthplace is required and should be at least 3 characters long.
-      </div>
+  <div style="position: relative; display: flex; justify-content: center; align-items: center; margin: 20px 0;">
+    <!-- Notification Box -->
+    <div style="position: relative; width: 90%; max-width: 900px; padding: 10px 10px; text-align: center; background: linear-gradient(135deg, #00c6ff, #0072ff); color: #fff; font-size: 20px; font-weight: 500; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); z-index: 1; line-height: 1.5; transition: all 0.3s ease-in-out;">
+        <div style="font-size: 18px; font-weight: normal;">
+            <span style="font-size: 28px; font-weight: 600; color: #fff; display: block; margin-bottom: 10px;">🔔 Important Notice</span> 
+            <span style="font-size: 22px;">Please select one of the options by clicking anywhere in the respective box. This will help you proceed to the next step. <strong>Each box is clickable</strong>.</span>
+        </div>
     </div>
-
-    <button type="submit" class="btn-submit" [disabled]="birthChartForm.invalid">Submit</button>
-  </form>
 </div>
+
+  <!-- Right Box for Baby Birth Chart Horoscope -->
+  <div 
+    class="box right-box"
+    [class.selected]="isBabyBirthChartSelected"
+    [@boxState]="isBabyBirthChartSelected ? 'selected' : 'normal'"
+    (click)="onBabyBirthChartClick(babyBirthChartModal)"
+    (keydown)="onKeyPress($event, 'baby', babyBirthChartModal)"
+    tabindex="0"
+    ngbTooltip="{{ babyBirthChartTooltip }}"
+    role="button"
+    aria-label="Baby Birth Chart"
+  >
+    <div class="box-image">
+      <img src="assets/baby-chart-icon.svg" alt="Baby Birth Chart Horoscope">
+    </div>
+    <div class="box-title">
+      <h2>Your Baby's Celestial Journey</h2>
+    </div>
+    <div class="box-content">
+      <ul>
+        <li>
+          <span class="icon">👶</span>
+          <span class="text">Comprehensive Birth Chart Reading</span>
+        </li>
+        <li>
+          <span class="icon">🌈</span>
+          <span class="text">Unique Personality Insights</span>
+        </li>
+        <li>
+          <span class="icon">🎯</span>
+          <span class="text">Potential Talent Indicators</span>
+        </li>
+        <li>
+          <span class="icon">🧘</span>
+          <span class="text">Holistic Chakra Analysis</span>
+        </li>
+        <li>
+          <span class="icon">❤️</span>
+          <span class="text">Nurturing Guidance Roadmap</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Personal Birth Chart Modal -->
+<ng-template #birthChartModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Personal Birth Chart Horoscope</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="birthChartForm" (ngSubmit)="onSubmit('personal')" class="birth-chart-form">
+      <!-- Name Field -->
+      <div class="form-group">
+        <label for="name">Full Name *</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="name" 
+          formControlName="name" 
+          [class.is-invalid]="isControlInvalid('name')"
+        >
+        <div *ngIf="isControlInvalid('name')" class="invalid-feedback">
+          Please enter a valid name
+        </div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-group">
+        <label>Date of Birth *</label>
+        <div class="input-group">
+          <input 
+            class="form-control" 
+            formControlName="dob" 
+            ngbDatepicker 
+            #personalDob="ngbDatepicker"
+            [readOnly]="true"
+            placeholder="Select Date"
+            (click)="personalDob.toggle()"
+            [class.is-invalid]="isControlInvalid('dob')"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="personalDob.toggle()" type="button">
+              📅
+            </button>
+          </div>
+        </div>
+        <div *ngIf="isControlInvalid('dob')" class="invalid-feedback">
+          Please select a valid date of birth
+        </div>
+      </div>
+
+      <!-- Birth Time -->
+      <div class="form-group">
+        <label for="birthTime">Birth Time * (24-hour format)</label>
+        <ngb-timepicker formControlName="birthTime" [meridian]="false"></ngb-timepicker>
+        <div *ngIf="isControlInvalid('birthTime')" class="invalid-feedback d-block">
+          Please select a valid birth time
+        </div>
+      </div>
+
+      <!-- Birth Place -->
+      <div class="form-group">
+        <label for="birthPlace">Birth Place *</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="birthPlace" 
+          formControlName="birthPlace"
+          (input)="onLocationInput($event)"
+          [class.is-invalid]="isControlInvalid('birthPlace')"
+        >
+        <ul *ngIf="locationSuggestions.length" class="location-suggestions">
+          <li 
+            *ngFor="let location of locationSuggestions" 
+            (click)="selectLocation(location)"
+          >
+            {{ location }}
+          </li>
+        </ul>
+        <div *ngIf="isControlInvalid('birthPlace')" class="invalid-feedback">
+          Please enter a valid birth place
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label>Gender *</label>
+        <select 
+          class="form-control" 
+          formControlName="gender"
+          [class.is-invalid]="isControlInvalid('gender')"
+        >
+          <option value="">Select Gender</option>
+          <option *ngFor="let gender of genderOptions" [value]="gender.value">
+            {{ gender.label }}
+          </option>
+        </select>
+        <div *ngIf="isControlInvalid('gender')" class="invalid-feedback">
+          Please select a gender
+        </div>
+      </div>
+
+      <!-- Question (Optional) -->
+      <div class="form-group">
+        <label for="question">Ask a Question (Optional)</label>
+        <textarea 
+          class="form-control" 
+          id="question" 
+          formControlName="question" 
+          rows="3"
+        ></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Submit Birth Chart</button>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Baby Birth Chart Modal -->
+<ng-template #babyBirthChartModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Baby Birth Chart Horoscope</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="babyBirthChartForm" (ngSubmit)="onSubmit('baby')" class="birth-chart-form">
+      <!-- Baby Name (Optional) -->
+      <div class="form-group">
+        <label for="babyName">Child's Name (Optional)</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="babyName" 
+          formControlName="babyName"
+        >
+      </div>
+
+      <!-- Parents' Names -->
+      <div class="form-group">
+        <label for="motherName">Mother's Name *</label>
+        <input 
+          id="motherName" 
+          type="text" 
+          class="form-control" 
+          formControlName="motherName"
+          [ngClass]="{'is-invalid': isControlInvalid('motherName')}"
+        />
+        <div class="invalid-feedback" *ngIf="isControlInvalid('motherName')">
+          Mother's Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="fatherName">Father's Name *</label>
+        <input 
+          id="fatherName" 
+          type="text" 
+          class="form-control" 
+          formControlName="fatherName"
+          [ngClass]="{'is-invalid': isControlInvalid('fatherName')}"
+        />
+        <div class="invalid-feedback" *ngIf="isControlInvalid('fatherName')">
+          Father's Name is required
+        </div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-group">
+        <label>Date of Birth *</label>
+        <div class="input-group">
+          <input 
+            class="form-control" 
+            formControlName="dob" 
+            ngbDatepicker 
+            #personalDob="ngbDatepicker"
+            [readOnly]="true"
+            placeholder="Select Date"
+            (click)="personalDob.toggle()"
+            [class.is-invalid]="isControlInvalid('dob')"
+          >
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="personalDob.toggle()" type="button">
+              📅
+            </button>
+          </div>
+        </div>
+        <div *ngIf="isControlInvalid('dob')" class="invalid-feedback">
+          Please select a valid date of birth
+        </div>
+      </div>
+
+      <!-- Birth Time -->
+      <div class="form-group">
+        <label for="birthTime">Birth Time * (24-hour format)</label>
+        <ngb-timepicker formControlName="birthTime" [meridian]="false"></ngb-timepicker>
+        <div *ngIf="isControlInvalid('birthTime')" class="invalid-feedback d-block">
+          Please select a valid birth time
+        </div>
+      </div>
+
+      <!-- Birth Place -->
+      <div class="form-group">
+        <label for="birthPlace">Birth Place *</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="birthPlace" 
+          formControlName="birthPlace"
+          (input)="onLocationInput($event)"
+          [class.is-invalid]="isControlInvalid('birthPlace')"
+        >
+        <ul *ngIf="locationSuggestions.length" class="location-suggestions">
+          <li 
+            *ngFor="let location of locationSuggestions" 
+            (click)="selectLocation(location)"
+          >
+            {{ location }}
+          </li>
+        </ul>
+        <div *ngIf="isControlInvalid('birthPlace')" class="invalid-feedback">
+          Please enter a valid birth place
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label>Gender *</label>
+        <select 
+          class="form-control" 
+          formControlName="gender"
+          [class.is-invalid]="isControlInvalid('gender')"
+        >
+          <option value="">Select Gender</option>
+          <option *ngFor="let gender of genderOptions" [value]="gender.value">
+            {{ gender.label }}
+          </option>
+        </select>
+        <div *ngIf="isControlInvalid('gender')" class="invalid-feedback">
+          Please select a gender
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">{{ submitButtonText }}</button>
+    </form>
+  </div>
+</ng-template>
+
+<!-- Footer -->
+<app-footer></app-footer>

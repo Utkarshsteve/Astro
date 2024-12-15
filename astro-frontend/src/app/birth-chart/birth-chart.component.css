@@ -1,331 +1,69 @@
-/* Container to hold the left and right boxes */
-.container {
-  display: flex;
-  justify-content: space-between;
-  margin: 5px auto;
-  max-width: 1900px; /* Increased max-width for broader layout */
-  padding: 0 15px;
-  gap: 20px;
-}
-
-/* Common box styles */
-.box {
-  flex: 1;
-  min-width: 600px; /* Significantly increased width */
-  padding: 25px;
-  border-radius: 15px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 2px solid transparent;
-  background-color: #f9f9f9;
+/* General Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  height: 650px; /* Fixed height to keep boxes compact */
-  overflow: auto; /* Scroll if content exceeds */
+  box-sizing: border-box;
 }
 
-/* Box Image Styles */
-.box-image {
-  width: 50px;
-  height: 100px;
-  margin-bottom: 8px;
+/* Header */
+app-header {
+  height: 60px;
+  background-color: #f5f5f5;
+  border-bottom: 2px solid #ddd;
+  flex-shrink: 0; /* Prevent shrinking */
+  z-index: 2;
 }
 
-.box-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+/* Footer */
+app-footer {
+  height: 60px;
+  background-color: #f5f5f5;
+  border-top: 2px solid #ddd;
+  flex-shrink: 0; /* Prevent shrinking */
+  z-index: 2;
 }
 
-/* Left Box for Birth Chart Reading */
-/* Left Box for Birth Chart Reading */
-.left-box {
-  background: linear-gradient(135deg, #d0eceb, #e0f7f4); /* Soft Blue-Green Gradient */
-  border: 3px solid #5ba19b; /* Muted Teal Border */
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth Hover Effect */
-}
-
-.left-box:hover {
-  transform: scale(1.03); /* Slight Scale on Hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced Shadow on Hover */
-}
-
-.left-box .box-title {
-  text-align: center;
-  color: #317773; /* Rich Teal for Title */
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-transform: uppercase; /* Bold Style */
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Light Shadow */
-  padding: 10px 15px;
-  background: linear-gradient(90deg, #b5e2dc, #a3d8d3); /* Gradient Highlight */
-  border-radius: 8px;
-  display: inline-block; /* Boxed Style */
-  transition: color 0.3s, background 0.3s; /* Hover Effect */
-}
-
-.left-box .box-title:hover {
-  color: #ffffff; /* Invert Title Color */
-  background: linear-gradient(90deg, #5ba19b, #478e87); /* Darker Gradient */
-}
-
-.left-box .box-content {
-  color: #4f4f4f; /* Neutral Dark Gray */
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.left-box .star {
-  color: #ffd700; /* Gold for Stars */
-  margin-right: 10px;
-  font-size: 1.2rem;
-}
-
-/* Right Box for Baby Birth Chart Horoscope */
-.right-box {
-  background: linear-gradient(135deg, #ffd8e5, #ffe4ec); /* Soft Pink Gradient */
-  border: 3px solid #f09bbf; /* Muted Pink Border */
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle Shadow */
-  transition: transform 0.3s, box-shadow 0.3s; /* Smooth Hover Effect */
-}
-
-.right-box:hover {
-  transform: scale(1.03); /* Slight Scale on Hover */
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced Shadow on Hover */
-}
-
-.right-box .box-title {
-  text-align: center;
-  color: #b35a84; /* Rich Pink for Title */
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  font-weight: bold;
-  text-transform: uppercase; /* Bold Style */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Enhanced Shadow */
-  padding: 10px 15px;
-  background: linear-gradient(90deg, #f6c5da, #f1b3ce); /* Gradient Highlight */
-  border-radius: 8px;
-  display: inline-block; /* Boxed Style */
-  transition: color 0.3s, background 0.3s; /* Hover Effect */
-}
-
-.right-box .box-title:hover {
-  color: #ffffff; /* Invert Title Color */
-  background: linear-gradient(90deg, #b35a84, #9e4f73); /* Darker Gradient */
-}
-
-.right-box .box-content {
-  color: #4a4a4a; /* Neutral Dark Gray */
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-.right-box .star {
-  color: #ffd700; /* Gold for Stars */
-  margin-right: 10px;
-  font-size: 1.2rem;
-}
-
-/* Content List Styles */
-.box-content ul {
-  list-style-type: none;
-  padding: 0;
-  width: 100%;
-}
-
-.box-content li {
+/* Main Content */
+.content {
   display: flex;
-  align-items: center;
+  flex: 1; /* Occupy remaining space */
+  flex-direction: row; /* Horizontal split */
+}
+
+/* Split Sections */
+.split {
+  flex: 1; /* Each section takes equal space */
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  margin-bottom: 12px;
-  padding: 8px;
-  border-radius: 8px;
-  transition: background-color 0.3s ease;
-  font-size: 0.95rem;
-}
-
-.box-content li:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.box-content .icon {
-  margin-right: 15px;
-  font-size: 1.5rem;
-}
-
-.box-content .text {
-  flex-grow: 1;
-  text-align: left;
-}
-
-/* Hover and Interactive States */
-.box:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-}
-
-.box:active {
-  transform: scale(0.98);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 1200px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .box {
-    width: 100%;
-    max-width: 800px;
-    min-width: 300px;
-    margin-bottom: 20px;
-    height: auto;
-  }
-}
-
-/* Accessibility and Focus States */
-.box:focus-visible {
-  outline: 3px solid #ff6600;
-  outline-offset: 3px;
-}
-
-.modal-header .close {
-  position: absolute; /* Position relative to the modal header */
-  top: 15px;          /* Adjust vertical positioning */
-  right: 22px;        /* Adjust horizontal positioning */
-  font-size: 1.1rem;  /* Customize the size if needed */
-  color: #333;        /* Set button color */
-  cursor: pointer;    /* Make it clear the button is clickable */
-}
-
-.modal-header {
-  background-color: #ba3939;
-  border-bottom: 2px solid #e0e0e0;
-  padding: 15px;
-}
-
-
-.modal-title {
-  color: #0d0d0d;
-  font-weight: bold;
-}
-
-.modal-body {
+  align-items: center;
+  text-align: center;
   padding: 20px;
 }
 
-.form-group {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* Birth Chart Styling */
+.birth-chart {
+  background: linear-gradient(to bottom, #fff3c4, #ffe17a);
+  color: #e67e22;
 }
 
-.form-group label {
-  margin-right: 15px; /* Adjust margin if needed */
+/* Baby Birth Chart Styling */
+.baby-birth-chart {
+  background: linear-gradient(to bottom, #ffe5e5, #ffcccc);
+  color: #d81b60;
 }
 
-.ngb-timepicker {
-  flex-grow: 1; /* Allow time picker to fill available space */
-  margin-left: 10px; /* Move the time picker a little to the left */
-}
-
-.input-group {
-  display: flex;
-  width: 100%;
-}
-
-.input-group-append {
-  margin-left: 10px;
-}
-
-.birth-chart-form .form-group {
-  margin-bottom: 15px;
-}
-
-.birth-chart-form label {
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 5px;
-}
-
-.birth-chart-form .form-control {
-  border-radius: 8px;
-  padding: 10px;
-  transition: all 0.3s ease;
-}
-
-.birth-chart-form .form-control:focus {
-  border-color: #5ba19b;
-  box-shadow: 0 0 0 0.2rem rgba(91, 161, 155, 0.25);
-}
-
-.form-control.is-invalid {
-  border-color: #dc3545;
-}
-
-.invalid-feedback {
-  color: #dc3545;
-  display: block;
-  margin-top: 5px;
-}
-
-.location-suggestions {
-  list-style-type: none;
-  padding: 0;
+/* Typography */
+h2 {
   margin: 0;
-  border: 1px solid #ddd;
-  max-height: 200px;
-  overflow-y: auto;
-  position: absolute;
-  width: 100%;
-  background-color: white;
-  z-index: 1000;
+  font-size: 2rem;
 }
 
-.location-suggestions li {
-  padding: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.location-suggestions li:hover {
-  background-color: #f0f0f0;
-}
-
-.btn-primary {
-  background-color: #5ba19b;
-  border-color: #5ba19b;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #478e87;
-  border-color: #478e87;
-}
-
-.calendar {
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-  .modal-dialog {
-    margin: 1.75rem 0.5rem;
-  }
-
-  .birth-chart-form .form-control {
-    font-size: 16px; /* Prevent zoom on iOS */
-  }
+p {
+  margin: 10px 0 0;
+  font-size: 1rem;
+  line-height: 1.5;
 }

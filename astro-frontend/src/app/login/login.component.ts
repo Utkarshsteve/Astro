@@ -31,4 +31,8 @@ export class LoginComponent {
     this.closeModal.emit();  // Notify the parent component (Header) to close the modal
   }
 
+  signOut(): void {
+    this.authService.signOut();
+  }
+
 }

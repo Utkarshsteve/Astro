@@ -73,6 +73,9 @@
 
 /* Google Sign-In button */
 .google-btn {
+  display: flex;
+  align-items: center; /* Align content vertically */
+  justify-content: center; /* Align content horizontally */
   background-color: #E67E22; /* Darker orange */
   color: white;
   border: none;
@@ -86,6 +89,13 @@
 
 .google-btn:hover {
   background-color: #D35400; /* Darker shade on hover */
+}
+
+/* Google logo inside the button */
+.google-logo {
+  width: 20px; /* Adjust width as needed */
+  height: 20px; /* Adjust height as needed */
+  margin-right: 10px; /* Space between the logo and the text */
 }
 
 /* Right Section Text */

@@ -1,302 +1,261 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { trigger, state, style, transition, animate } from '@angular/animations';
-import { NgbModule, NgbModal, NgbDatepickerModule, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors, FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
-
-interface FormConfig {
-  baseControls: { [key: string]: any };
-  title: string;
-  submitLabel: string;
-}
+import { CustomTimePickerComponent } from './custom-time-picker.component';
 
 @Component({
   selector: 'app-birth-chart',
+  templateUrl: './birth-chart.component.html',
+  styleUrls: ['./birth-chart.component.scss'],
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
-    HeaderComponent, 
-    FooterComponent, 
-    NgbModule,
-    NgbTimepickerModule,
-    NgbDatepickerModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './birth-chart.component.html',
-  styleUrls: ['./birth-chart.component.css'],
-  animations: [
-    trigger('boxState', [
-      state('normal', style({
-        transform: 'scale(1)',
-        boxShadow: '0 6px 12px rgba(0, 0, 0, 0.1)'
-      })),
-      state('selected', style({
-        transform: 'scale(1.05)',
-        boxShadow: '0 12px 24px rgba(0, 0, 0, 0.2)'
-      })),
-      transition('normal => selected', animate('200ms ease-in')),
-      transition('selected => normal', animate('200ms ease-out'))
-    ])
+    ReactiveFormsModule,
+    HeaderComponent,
+    FooterComponent,
+    FormsModule,
+    CustomTimePickerComponent
   ]
 })
 export class BirthChartComponent implements OnInit {
-  @ViewChild('personalDob', { static: false }) personalDobDatepicker: any;
-  @ViewChild('babyDob', { static: false }) babyDobDatepicker: any;
-
-  isBirthChartSelected = false;
-  isBabyBirthChartSelected = false;
-  
-  birthChartTooltip = 'Dive deep into your personal cosmic blueprint';
-  babyBirthChartTooltip = 'Unlock your baby\'s unique celestial potential';
-
   birthChartForm!: FormGroup;
   babyBirthChartForm!: FormGroup;
-  formType: 'personal' | 'baby' = 'personal';
-  locationSuggestions: string[] = [];
-  isFormSubmitted = false;
-  modalTitle = '';
-  submitButtonText = '';
+  activeForm: 'personal' | 'baby' | null = null;
+  maxDate: string;
+  maxTime: string;
+  showTimePicker = false;
+  timePickerType: 'personal' | 'baby' | null = null;
 
-  genderOptions = [
-    { value: 'male', label: 'Male' },
-    { value: 'female', label: 'Female' },
-    { value: 'other', label: 'Other' }
+  countries = [
+    { code: 'IN', name: 'India' },
+    { code: 'US', name: 'United States' },
+    { code: 'UK', name: 'United Kingdom' },
   ];
 
-  formConfigs: { [key: string]: FormConfig } = {
-    personal: {
-      baseControls: {
-        name: ['', [Validators.required, Validators.minLength(2)]],
-        dob: [null, [Validators.required, this.dateValidator]],
-        birthTime: [{ hour: null, minute: null, second: null }, [Validators.required, this.timeValidator]],
-        birthPlace: ['', [Validators.required]],
-        gender: ['', [Validators.required]],
-        question: [''],
-        latitude: [''],
-        longitude: ['']
-      },
-      title: 'Personal Birth Chart Horoscope',
-      submitLabel: 'Submit Birth Chart'
-    },
-    baby: {
-      baseControls: {
-        babyName: [''], 
-        motherName: ['', [Validators.required, Validators.minLength(2)]],
-        fatherName: ['', [Validators.required, Validators.minLength(2)]],
-        dob: [null, [Validators.required, this.dateValidator]],
-        birthTime: [{ hour: null, minute: null, second: null }, [Validators.required, this.timeValidator]],
-        birthPlace: ['', [Validators.required]],
-        gender: ['', [Validators.required]],
-        latitude: [''],
-        longitude: ['']
-      },
-      title: 'Baby Birth Chart Horoscope',
-      submitLabel: 'Submit Baby Birth Chart'
-    }
-  };
+  countryCodes = [
+    { code: '+91', flag: '🇮🇳' },
+    { code: '+1', flag: '🇺🇸' },
+    { code: '+44', flag: '🇬🇧' },
+  ];
 
-  constructor(
-    private modalService: NgbModal,
-    private fb: FormBuilder
-  ) {}
+  questionTypes = [
+    'Career & Business',
+    'Love & Relationships',
+    'Health & Wellness',
+    'Family & Children',
+    'Wealth & Finance',
+    'Education & Learning',
+    'Travel & Relocation',
+    'Spiritual Growth'
+  ];
 
-  ngOnInit() {
-    this.resetSelections();
-    this.initializeForm('personal');
+  selectedCountryStates: string[] = [];
+
+  constructor(private fb: FormBuilder) {
+    const now = new Date();
+    this.maxDate = now.toISOString().split('T')[0];
+    this.maxTime = now.toTimeString().slice(0, 8);
+    this.initializeForms();
   }
 
-  // Date validator method
-  dateValidator(control: AbstractControl): {[key: string]: any} | null {
-    if (!control.value) return null;
-
-    const inputDate = new Date(
-      control.value.year, 
-      control.value.month - 1, 
-      control.value.day
-    );
-    const today = new Date();
-    const minAgeDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
-
-    if (isNaN(inputDate.getTime())) {
-      return { 'invalidDate': true };
-    }
-
-    if (inputDate > today) {
-      return { 'futureDate': true };
-    }
-
-    if (inputDate > minAgeDate) {
-      return { 'underAge': true };
-    }
-
-    return null;
+  ngOnInit(): void {
+    this.setupFormListeners();
   }
 
-  // Time validator method
-  timeValidator(control: AbstractControl): {[key: string]: any} | null {
-    const time = control.value;
-    if (!time) return null;
+  private initializeForms(): void {
+    // Initialize Personal Birth Chart Form
+    this.birthChartForm = this.fb.group({
+      fullName: ['', [Validators.required, Validators.minLength(3)]],
+      gender: ['', Validators.required],
+      dateOfBirth: ['', [Validators.required, this.dateValidator()]],
+      timeOfBirth: ['', [Validators.required, this.timeValidator()]],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      countryCode: ['+91'],
+      whatsappNumber: ['', [Validators.pattern('^[0-9]{10}$')]],
+      questionType: [''],
+      question: ['']
+    });
 
-    const { hour, minute } = time;
-    
-    if (hour === null || minute === null) {
-      return { 'invalidTime': true };
-    }
-
-    if (hour < 0 || hour > 23) {
-      return { 'invalidHours': true };
-    }
-
-    if (minute < 0 || minute > 59) {
-      return { 'invalidMinutes': true };
-    }
-
-    return null;
-  }
-
-  // Open datepicker method (updated)
-  openDatepicker() {
-    if (this.formType === 'personal') {
-      // Use optional chaining to safely call toggle
-      this.personalDobDatepicker?.toggle();
-    } else {
-      this.babyDobDatepicker?.toggle();
-    }
-  }
-
-  resetSelections() {
-    this.isBirthChartSelected = false;
-    this.isBabyBirthChartSelected = false;
-  }
-
-  initializeForm(type: 'personal' | 'baby') {
-    this.formType = type;
-    const config = this.formConfigs[type];
-
-    this.modalTitle = config.title;
-    this.submitButtonText = config.submitLabel;
-
-    const formControls = config.baseControls;
-
-    if (type === 'personal') {
-      this.birthChartForm = this.fb.group(formControls);
-    } else {
-      this.babyBirthChartForm = this.fb.group(formControls);
-    }
-  }
-
-  // Dynamically get current form
-  getCurrentForm(): FormGroup {
-    return this.formType === 'personal' 
-      ? this.birthChartForm 
-      : this.babyBirthChartForm;
-  }
-
-  // Location suggestion method
-  onLocationInput(event: Event) {
-    const input = (event.target as HTMLInputElement).value;
-    if (input.length > 2) {
-      this.locationSuggestions = [
-        `${input}, City, Country`,
-        `Another ${input} Location`,
-        `${input} Metropolitan Area`
-      ].filter(location => 
-        location.toLowerCase().includes(input.toLowerCase())
-      );
-    } else {
-      this.locationSuggestions = [];
-    }
-  }
-
-  // Select location method
-  selectLocation(location: string) {
-    const currentForm = this.getCurrentForm();
-    
-    currentForm?.get('birthPlace')?.setValue(location);
-    this.locationSuggestions = [];
-
-    // Simulate geocoding
-    this.setLocationCoordinates(location);
-  }
-
-  // Set location coordinates method
-  setLocationCoordinates(location: string) {
-    const currentForm = this.getCurrentForm();
-    
-    // Placeholder coordinates
-    currentForm?.patchValue({
-      latitude: '40.7128', 
-      longitude: '-74.0060'  
+    // Initialize Baby Birth Chart Form
+    this.babyBirthChartForm = this.fb.group({
+      babyName: [''],
+      parentName: ['', [Validators.required, Validators.minLength(3)]],
+      gender: ['', Validators.required],
+      dateOfBirth: ['', [Validators.required, this.dateValidator()]],
+      timeOfBirth: ['', [Validators.required, this.timeValidator()]],
+      country: ['', Validators.required],
+      state: ['', Validators.required],
+      city: ['', Validators.required],
+      countryCode: ['+91'],
+      whatsappNumber: ['', [Validators.pattern('^[0-9]{10}$')]]
     });
   }
 
-  // Modal open methods
-  onBirthChartClick(content: any) {
-    this.isBirthChartSelected = true;
-    this.isBabyBirthChartSelected = false;
-    this.isFormSubmitted = false;
-    this.initializeForm('personal');
-    this.openFormModal(content);
-  }
+  private setupFormListeners(): void {
+    this.birthChartForm.get('country')?.valueChanges.subscribe(country => {
+      this.updateStates(country);
+    });
 
-  onBabyBirthChartClick(content: any) {
-    this.isBabyBirthChartSelected = true;
-    this.isBirthChartSelected = false;
-    this.isFormSubmitted = false;
-    this.initializeForm('baby');
-    this.openFormModal(content);
-  }
+    this.babyBirthChartForm.get('country')?.valueChanges.subscribe(country => {
+      this.updateStates(country);
+    });
 
-  openFormModal(content: any) {
-    this.modalService.open(content, { 
-      centered: true, 
-      size: 'lg', 
-      backdrop: 'static' 
+    this.birthChartForm.get('questionType')?.valueChanges.subscribe(type => {
+      const questionControl = this.birthChartForm.get('question');
+      if (type) {
+        questionControl?.setValidators([Validators.required, Validators.minLength(10)]);
+      } else {
+        questionControl?.clearValidators();
+      }
+      questionControl?.updateValueAndValidity();
     });
   }
 
-  // Form submission method
+  private dateValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      
+      const selectedDate = new Date(control.value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      
+      if (selectedDate > today) {
+        return { futureDate: true };
+      }
+      return null;
+    };
+  }
+
+  private timeValidator() {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value) return null;
+      
+      const selectedTime = control.value;
+      const form = control.parent as FormGroup;
+      if (!form) return null;
+
+      const selectedDate = form.get('dateOfBirth')?.value;
+      
+      if (selectedDate) {
+        const today = new Date().toISOString().split('T')[0];
+        if (selectedDate === today) {
+          const now = new Date();
+          const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+          
+          if (selectedTime > currentTime) {
+            return { futureTime: true };
+          }
+        }
+      }
+      return null;
+    };
+  }
+
+  updateStates(country: string): void {
+    switch(country) {
+      case 'IN':
+        this.selectedCountryStates = [
+          'Andhra Pradesh', 'Karnataka', 'Kerala', 'Tamil Nadu',
+          'Maharashtra', 'Gujarat', 'Delhi', 'Uttar Pradesh'
+        ];
+        break;
+      case 'US':
+        this.selectedCountryStates = [
+          'California', 'New York', 'Texas', 'Florida',
+          'Illinois', 'Pennsylvania'
+        ];
+        break;
+      case 'UK':
+        this.selectedCountryStates = [
+          'England', 'Scotland', 'Wales', 'Northern Ireland'
+        ];
+        break;
+      default:
+        this.selectedCountryStates = [];
+    }
+  }
+
+  setActiveForm(formType: 'personal' | 'baby'): void {
+    this.activeForm = formType;
+  }
+
+  closeForm(): void {
+    this.activeForm = null;
+    this.birthChartForm.reset();
+    this.babyBirthChartForm.reset();
+    this.birthChartForm.patchValue({ countryCode: '+91' });
+    this.babyBirthChartForm.patchValue({ countryCode: '+91' });
+  }
+
+  openDatePicker(event: any): void {
+    const input = event.target as HTMLInputElement;
+    input.showPicker();
+  }
+
+  openTimePicker(formType: 'personal' | 'baby'): void {
+    this.timePickerType = formType;
+    this.showTimePicker = true;
+  }
+
+  handleTimeSelected(time: string): void {
+    const form = this.timePickerType === 'personal' ? this.birthChartForm : this.babyBirthChartForm;
+    form.patchValue({ timeOfBirth: time });
+    this.showTimePicker = false;
+    this.timePickerType = null;
+  }
+
+  handleTimePickerCancelled(): void {
+    this.showTimePicker = false;
+    this.timePickerType = null;
+  }
+
   onSubmit(formType: 'personal' | 'baby'): void {
-    this.isFormSubmitted = true;
-    const currentForm = this.getCurrentForm();
-
-    if (currentForm?.valid) {
-      console.log(`${formType.charAt(0).toUpperCase() + formType.slice(1)} Birth Chart Form Submitted`, currentForm.value);
-      // Add your submission logic here
+    const form = formType === 'personal' ? this.birthChartForm : this.babyBirthChartForm;
+    
+    if (form.valid) {
+      console.log('Form submitted:', form.value);
+      this.closeForm();
     } else {
-      this.displayValidationErrors(currentForm);
+      this.markFormGroupTouched(form);
     }
   }
 
-  // Validation error display method
-  displayValidationErrors(form: FormGroup) {
-    Object.keys(form.controls).forEach(field => {
-      const control = form.get(field);
-      if (control?.invalid) {
-        control.markAsTouched();
-        console.log(`Validation error in ${field}`);
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
       }
     });
   }
 
-  // Keyboard event handler
-  onKeyPress(event: KeyboardEvent, type: 'personal' | 'baby', content: any) {
-    if (event.key === 'Enter' || event.key === ' ') {
-      type === 'personal' 
-        ? this.onBirthChartClick(content) 
-        : this.onBabyBirthChartClick(content);
-    }
+  get currentForm(): FormGroup {
+    return this.activeForm === 'personal' ? this.birthChartForm : this.babyBirthChartForm;
   }
 
-  // Method to check form control validity
-  isControlInvalid(controlName: string): boolean {
-    const control = this.formType === 'personal' 
-      ? this.birthChartForm?.get(controlName) 
-      : this.babyBirthChartForm?.get(controlName);
-    return !!(control && this.isFormSubmitted && control.invalid);
+  isFieldInvalid(formType: 'personal' | 'baby', fieldName: string): boolean {
+    const form = formType === 'personal' ? this.birthChartForm : this.babyBirthChartForm;
+    const field = form.get(fieldName);
+    return field ? (field.invalid && (field.dirty || field.touched)) : false;
+  }
+
+  getErrorMessage(formType: 'personal' | 'baby', fieldName: string): string {
+    const form = formType === 'personal' ? this.birthChartForm : this.babyBirthChartForm;
+    const field = form.get(fieldName);
+    
+    if (!field) return '';
+
+    if (field.hasError('required')) return 'This field is required';
+    if (field.hasError('minlength')) return 'Input is too short';
+    if (field.hasError('pattern')) return 'Invalid format';
+    if (field.hasError('futureDate')) return 'Cannot select a future date';
+    if (field.hasError('futureTime')) return 'Cannot select a future time';
+    
+    return '';
   }
 }

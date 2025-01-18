@@ -1,14 +1,462 @@
 <app-header></app-header>
 
-<div class="content">
+<main class="content">
+  <!-- Personal Birth Chart Section -->
   <div class="split birth-chart">
-    <h2>Birth Chart</h2>
-    <p>Explore your astrological chart.</p>
+    <h2 class="main-title">Birth Chart</h2>
+    <p class="subtitle">Explore your astrological chart and discover your destiny path</p>
+    <button class="chart-btn" (click)="setActiveForm('personal')" *ngIf="!activeForm">
+      <i class="fas fa-star"></i> Create Birth Chart
+    </button>
+
+    <!-- Personal Birth Chart Form -->
+    <div class="form-overlay" *ngIf="activeForm === 'personal'">
+      <div class="form-container">
+        <form [formGroup]="birthChartForm" (ngSubmit)="onSubmit('personal')">
+          <div class="form-header">
+            <h3 class="form-title">
+              <i class="fas fa-user-circle"></i> Personal Birth Chart
+            </h3>
+            <button type="button" class="close-btn" (click)="closeForm()">
+              &times;
+            </button>
+          </div>
+
+          <!-- Personal Details Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-user"></i> Personal Details
+            </h4>
+            
+            <!-- Full Name -->
+            <div class="form-field">
+              <label class="field-label" for="fullName">
+                Full Name <span class="required">*</span>
+              </label>
+              <input 
+                id="fullName" 
+                type="text" 
+                formControlName="fullName" 
+                placeholder="Enter your full name"
+                class="form-input"
+              >
+            </div>
+
+            <!-- Gender Selection -->
+            <div class="form-field">
+              <label class="field-label">
+                Gender <span class="required">*</span>
+              </label>
+              <div class="gender-options">
+                <label class="gender-option">
+                  <input type="radio" formControlName="gender" value="male">
+                  <span class="radio-button">Male</span>
+                </label>
+                <label class="gender-option">
+                  <input type="radio" formControlName="gender" value="female">
+                  <span class="radio-button">Female</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Birth Details Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-calendar-alt"></i> Birth Details
+            </h4>
+            
+            <div class="birth-details">
+              <div class="form-field">
+                <label class="field-label" for="dob">
+                  Date of Birth <span class="required">*</span>
+                </label>
+                <input 
+                  id="dob" 
+                  type="date" 
+                  formControlName="dateOfBirth"
+                  class="date-time-input"
+                  [max]="maxDate"
+                  (click)="openDatePicker($event)"
+                >
+              </div>
+
+              <!-- Updated Time of Birth Input -->
+              <div class="form-field">
+                <label class="field-label" for="tob">
+                  Time of Birth <span class="required">*</span>
+                </label>
+                <div class="time-input-group">
+                  <input 
+                    id="tob" 
+                    type="text" 
+                    formControlName="timeOfBirth"
+                    class="time-picker-input"
+                    readonly
+                    placeholder="Click to select time"
+                  >
+                  <button 
+                    type="button" 
+                    class="time-picker-btn" 
+                    (click)="openTimePicker('personal')"
+                  >
+                    <i class="fas fa-clock"></i>
+                    Select Time
+                  </button>
+                </div>
+                <span class="helper-text">Click the button to select time of birth</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Place of Birth Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-map-marker-alt"></i> Place of Birth
+            </h4>
+            <div class="location-fields">
+              <div class="form-field">
+                <label class="field-label" for="country">
+                  Country <span class="required">*</span>
+                </label>
+                <select 
+                  id="country" 
+                  formControlName="country"
+                  class="form-input"
+                >
+                  <option value="">Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country.code">
+                    {{country.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="field-label" for="state">
+                  State <span class="required">*</span>
+                </label>
+                <select 
+                  id="state" 
+                  formControlName="state"
+                  class="form-input"
+                >
+                  <option value="">Select State</option>
+                  <option *ngFor="let state of selectedCountryStates" [value]="state">
+                    {{state}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="field-label" for="city">
+                  City <span class="required">*</span>
+                </label>
+                <input 
+                  id="city" 
+                  type="text" 
+                  formControlName="city"
+                  placeholder="Enter city name"
+                  class="form-input"
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fab fa-whatsapp"></i> Contact Details
+            </h4>
+            <div class="whatsapp-field">
+              <label class="field-label">
+                WhatsApp Number (Optional)
+              </label>
+              <div class="whatsapp-input-container">
+                <select class="country-code-select" formControlName="countryCode">
+                  <option *ngFor="let code of countryCodes" [value]="code.code">
+                    {{code.flag}} {{code.code}}
+                  </option>
+                </select>
+                <div class="whatsapp-input-wrapper">
+                  <i class="fab fa-whatsapp whatsapp-icon"></i>
+                  <input 
+                    type="tel" 
+                    class="whatsapp-number-input"
+                    formControlName="whatsappNumber"
+                    placeholder="Enter WhatsApp number"
+                  >
+                </div>
+              </div>
+              <span class="helper-text">Birth chart PDF will be sent to this WhatsApp number</span>
+            </div>
+          </div>
+
+          <!-- Question Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-question-circle"></i> Ask a Question
+            </h4>
+            <div class="form-field">
+              <select 
+                formControlName="questionType" 
+                class="form-input"
+              >
+                <option value="">Select Category</option>
+                <option *ngFor="let type of questionTypes" [value]="type">
+                  {{type}}
+                </option>
+              </select>
+              
+              <textarea 
+                *ngIf="birthChartForm.get('questionType')?.value"
+                formControlName="question"
+                rows="4"
+                placeholder="Type your question here..."
+                class="form-input"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="button-group">
+            <button type="button" class="cancel-btn" (click)="closeForm()">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="submit-btn" [disabled]="birthChartForm.invalid">
+              <i class="fas fa-chart-line"></i> Generate Birth Chart
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
+
+  <!-- Baby Birth Chart Section -->
   <div class="split baby-birth-chart">
-    <h2>Baby Birth Chart</h2>
-    <p>Discover the horoscope of your little one.</p>
+    <h2 class="main-title">Baby Birth Chart</h2>
+    <p class="subtitle">Discover your little one's astrological destiny path</p>
+    <button class="chart-btn" (click)="setActiveForm('baby')" *ngIf="!activeForm">
+      <i class="fas fa-baby"></i> Create Baby Birth Chart
+    </button>
+
+    <!-- Baby Birth Chart Form -->
+    <div class="form-overlay" *ngIf="activeForm === 'baby'">
+      <div class="form-container">
+        <form [formGroup]="babyBirthChartForm" (ngSubmit)="onSubmit('baby')">
+          <div class="form-header">
+            <h3 class="form-title">
+              <i class="fas fa-baby"></i> Baby Birth Chart
+            </h3>
+            <button type="button" class="close-btn" (click)="closeForm()">
+              &times;
+            </button>
+          </div>
+
+          <!-- Baby Details Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-baby"></i> Baby Details
+            </h4>
+            
+            <!-- Baby Name -->
+            <div class="form-field">
+              <label class="field-label" for="babyName">
+                Baby's Name (Optional)
+              </label>
+              <input 
+                id="babyName" 
+                type="text" 
+                formControlName="babyName" 
+                placeholder="Enter baby's name"
+                class="form-input"
+              >
+            </div>
+
+            <!-- Parent's Name -->
+            <div class="form-field">
+              <label class="field-label" for="parentName">
+                Parent's Name <span class="required">*</span>
+              </label>
+              <input 
+                id="parentName" 
+                type="text" 
+                formControlName="parentName" 
+                placeholder="Enter parent's name"
+                class="form-input"
+              >
+            </div>
+
+            <!-- Gender Selection -->
+            <div class="form-field">
+              <label class="field-label">
+                Gender <span class="required">*</span>
+              </label>
+              <div class="gender-options">
+                <label class="gender-option">
+                  <input type="radio" formControlName="gender" value="male">
+                  <span class="radio-button">Male</span>
+                </label>
+                <label class="gender-option">
+                  <input type="radio" formControlName="gender" value="female">
+                  <span class="radio-button">Female</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Birth Details Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-calendar-alt"></i> Birth Details
+            </h4>
+            
+            <div class="birth-details">
+              <div class="form-field">
+                <label class="field-label" for="babyDob">
+                  Date of Birth <span class="required">*</span>
+                </label>
+                <input 
+                  id="babyDob" 
+                  type="date" 
+                  formControlName="dateOfBirth"
+                  class="date-time-input"
+                  [max]="maxDate"
+                  (click)="openDatePicker($event)"
+                >
+              </div>
+
+              <!-- Updated Baby Time of Birth Input -->
+              <div class="form-field">
+                <label class="field-label" for="babyTob">
+                  Time of Birth <span class="required">*</span>
+                </label>
+                <div class="time-input-group">
+                  <input 
+                    id="babyTob" 
+                    type="text" 
+                    formControlName="timeOfBirth"
+                    class="time-picker-input"
+                    readonly
+                    placeholder="Click to select time"
+                  >
+                  <button 
+                    type="button" 
+                    class="time-picker-btn" 
+                    (click)="openTimePicker('baby')"
+                  >
+                    <i class="fas fa-clock"></i>
+                    Select Time
+                  </button>
+                </div>
+                <span class="helper-text">Click the button to select time of birth</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Place of Birth Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fas fa-map-marker-alt"></i> Place of Birth
+            </h4>
+            <div class="location-fields">
+              <div class="form-field">
+                <label class="field-label" for="babyCountry">
+                  Country <span class="required">*</span>
+                </label>
+                <select 
+                  id="babyCountry" 
+                  formControlName="country"
+                  class="form-input"
+                >
+                  <option value="">Select Country</option>
+                  <option *ngFor="let country of countries" [value]="country.code">
+                    {{country.name}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="field-label" for="babyState">
+                  State <span class="required">*</span>
+                </label>
+                <select 
+                  id="babyState" 
+                  formControlName="state"
+                  class="form-input"
+                >
+                  <option value="">Select State</option>
+                  <option *ngFor="let state of selectedCountryStates" [value]="state">
+                    {{state}}
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-field">
+                <label class="field-label" for="babyCity">
+                  City <span class="required">*</span>
+                </label>
+                <input 
+                  id="babyCity" 
+                  type="text" 
+                  formControlName="city"
+                  placeholder="Enter city name"
+                  class="form-input"
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="form-section">
+            <h4 class="section-title">
+              <i class="fab fa-whatsapp"></i> Contact Details
+            </h4>
+            <div class="whatsapp-field">
+              <label class="field-label">
+                WhatsApp Number (Optional)
+              </label>
+              <div class="whatsapp-input-container">
+                <select class="country-code-select" formControlName="countryCode">
+                  <option *ngFor="let code of countryCodes" [value]="code.code">
+                    {{code.flag}} {{code.code}}
+                  </option>
+                </select>
+                <div class="whatsapp-input-wrapper">
+                  <i class="fab fa-whatsapp whatsapp-icon"></i>
+                  <input 
+                    type="tel" 
+                    class="whatsapp-number-input"
+                    formControlName="whatsappNumber"
+                    placeholder="Enter WhatsApp number"
+                  >
+                </div>
+              </div>
+              <span class="helper-text">Baby's birth chart PDF will be sent to this WhatsApp number</span>
+            </div>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="button-group">
+            <button type="button" class="cancel-btn" (click)="closeForm()">
+              <i class="fas fa-times"></i> Cancel
+            </button>
+            <button type="submit" class="submit-btn" [disabled]="babyBirthChartForm.invalid">
+              <i class="fas fa-chart-line"></i> Generate Baby Birth Chart
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Add the time picker component here -->
+  <app-custom-time-picker 
+    *ngIf="showTimePicker"
+    [initialTime]="(timePickerType === 'personal' ? birthChartForm : babyBirthChartForm).get('timeOfBirth')?.value"
+    (timeSelected)="handleTimeSelected($event)"
+    (cancelled)="handleTimePickerCancelled()"
+  ></app-custom-time-picker>
+
+</main>
 
 <app-footer></app-footer>

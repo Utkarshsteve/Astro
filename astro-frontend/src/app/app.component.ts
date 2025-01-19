@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { LoveCompatibilityComponent } from './love-compatibility/love-compatibility.component';
 import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     FooterComponent,
     LandingPageComponent,
+    LoginComponent,
     LoveCompatibilityComponent,
     RouterOutlet,
     RouterLink,

@@ -9,12 +9,20 @@
     <div class="right-section">
       <span class="close-btn" (click)="close()">&times;</span>
       <h2>Login</h2>
-      <button class="google-btn" (click)="signInWithGoogle()">
+      <asl-google-signin-button type='icon' size='medium' class="google-logo"></asl-google-signin-button>
+      <div *ngIf="user">
+        <img src = "{{user.photoUrl}}">
+        <div>
+          <h4>{{user.name}}</h4>
+          <h4>{{user.email}}</h4>
+        </div>
+      </div>
+      <!-- <button class="google-btn" (click)="signInWithGoogle()">
         <img
     src="../../assets/images/web_neutral_sq_na.svg"
     alt="Google Logo"
     class="google-logo"
-  />Sign in with Google</button>
+  />Sign in with Google</button> -->
       <p>
         By signing up, I agree to the
         <a href="#">Privacy Policy</a> and

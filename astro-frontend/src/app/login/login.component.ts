@@ -1,31 +1,30 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { SocialAuthService, GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { GoogleSigninButtonModule, SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, GoogleSigninButtonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   @Output() closeModal = new EventEmitter<void>();
 
-  constructor(private authService: SocialAuthService) {}
+  user!: SocialUser;
+  loggedIn: boolean = false;
 
-  ngOnInit(): void {
-    // Optional: Initialize the social login service if needed
+  constructor(private authService: SocialAuthService) { }
+
+  ngOnInit() {
+    this.authService.authState.subscribe((user) => {
+      this.user = user;
+      this.loggedIn = (user != null);
+      if (this.user !=null)
+      console.log(user, this.loggedIn)
+    });
   }
-
-  signInWithGoogle(): void {
-    this.authService.signIn(GoogleLoginProvider.PROVIDER_ID)
-      .then(user => {
-        console.log('User signed in:', user);
-        // Handle login success (e.g., close modal, redirect, etc.)
-      })
-      .catch(error => console.error('Login failed:', error));
-  }
-
   // Function to close the modal
   close() {
     this.closeModal.emit();  // Notify the parent component (Header) to close the modal
